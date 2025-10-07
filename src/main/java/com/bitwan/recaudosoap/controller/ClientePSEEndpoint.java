@@ -28,8 +28,8 @@ import org.springframework.ws.soap.SoapFaultException;
 public class ClientePSEEndpoint {
 
     // Debe coincidir con el targetNamespace de tu XSD
-    private static final String NAMESPACE_URI = "https://pruebados.bitwan.info/InsitelCollectionServicePse";
-    //private static final String NAMESPACE_URI = "http://www.achcolombia.com.co/PSEHostingInvoicesWS";
+    //private static final String NAMESPACE_URI = "https://pruebados.bitwan.info/InsitelCollectionServicePse";
+    private static final String NAMESPACE_URI = "http://www.achcolombia.com.co/PSEHostingInvoicesWS";
 
 
     private final VerificationRestClient verificationRestClient;

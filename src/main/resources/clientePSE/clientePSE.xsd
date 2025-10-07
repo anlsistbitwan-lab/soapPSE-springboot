@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<!--<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="https://pruebados.bitwan.info/InsitelCollectionServicePse"
            xmlns:tns="https://pruebados.bitwan.info/InsitelCollectionServicePse"
-           elementFormDefault="qualified">
+           elementFormDefault="qualified">-->
 
-<!--<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://www.achcolombia.com.co/PSEHostingInvoicesWS"
            xmlns:tns="http://www.achcolombia.com.co/PSEHostingInvoicesWS"
-           elementFormDefault="qualified">-->
+           elementFormDefault="qualified">
+    
     <!-- ===================== -->
     <!-- 1. GetTransactionInformationInvoice -->
     <!-- ===================== -->
