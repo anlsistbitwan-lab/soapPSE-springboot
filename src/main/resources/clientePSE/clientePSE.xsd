@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://pruebados.bitwan.info/InsitelCollectionServicePse"
+           xmlns:tns="https://pruebados.bitwan.info/InsitelCollectionServicePse"
+           elementFormDefault="qualified">
+
+<!--<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.achcolombia.com.co/PSEHostingInvoicesWS"
+           xmlns:tns="http://www.achcolombia.com.co/PSEHostingInvoicesWS"
+           elementFormDefault="qualified">-->
+    <!-- ===================== -->
+    <!-- 1. GetTransactionInformationInvoice -->
+    <!-- ===================== -->
+
+    <xs:element name="GetTransactionInformationInvoice">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TicketOfficeID" type="xs:int"/>
+                <xs:element name="TKOPassword" type="xs:string"/>
+                <xs:element name="QueryID" type="xs:string"/>
+                <xs:element name="Customer_Password" type="xs:string"/>
+                <xs:element name="rowID" type="xs:int"/>
+                <xs:element name="paymentAmount" type="xs:decimal"/>
+                <xs:element name="ChargeAmount" type="xs:decimal"/>
+                <xs:element name="Email" type="xs:string"/>
+                <xs:element name="CustomerIP" type="xs:string"/>
+                <xs:element name="SoliciteDate" type="xs:dateTime"/>
+                <xs:element name="Fields" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="CommerceField" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Name" type="xs:string"/>
+                                        <xs:element name="Value" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetTransactionInformationInvoiceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="GetTransactionInformationInvoiceResult">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ReturnCode" type="xs:string"/>
+                            <xs:element name="ErrorMessage" type="xs:string" minOccurs="0"/>
+                            <xs:element name="Invoices" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="InvoiceField" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="InvoiceID" type="xs:string"/>
+                                                    <xs:element name="PaymentDescription" type="xs:string"/>
+                                                    <xs:element name="Amount" type="xs:decimal"/>
+                                                    <xs:element name="VatAmount" type="xs:decimal"/>
+                                                    <xs:element name="ExpirationDate" type="xs:dateTime"/>
+                                                    <xs:element name="ServiceCode" type="xs:string"/>
+                                                    <xs:element name="EMail" type="xs:string"/>
+                                                    <xs:element name="ReferenceNumber1" type="xs:string"/>
+                                                    <xs:element name="ReferenceNumber2" type="xs:string"/>
+                                                    <xs:element name="ReferenceNumber3" type="xs:string"/>
+                                                    <xs:element name="Fields" minOccurs="0"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== -->
+    <!-- 2. ConfirmTransactionPaymentInvoice -->
+    <!-- ===================== -->
+
+    <xs:element name="ConfirmTransactionPaymentInvoice">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TicketOfficeID" type="xs:int"/>
+                <xs:element name="TKOPassword" type="xs:string"/>
+                <xs:element name="rowID" type="xs:int"/>
+                <xs:element name="Invoices" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="InvoiceConfirmField" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="InvoiceID" type="xs:string"/>
+                                        <xs:element name="PaymentDescription" type="xs:string"/>
+                                        <xs:element name="Amount" type="xs:decimal"/>
+                                        <xs:element name="VatAmount" type="xs:decimal"/>
+                                        <xs:element name="ExpirationDate" type="xs:dateTime"/>
+                                        <xs:element name="ServiceCode" type="xs:string"/>
+                                        <xs:element name="BankProcessDate" type="xs:dateTime"/>
+                                        <xs:element name="TransactionState" type="xs:string"/>
+                                        <xs:element name="TicketID" type="xs:string"/>
+                                        <xs:element name="PaymentID" type="xs:string"/>
+                                        <xs:element name="financialInstitutionCode" type="xs:string"/>
+                                        <xs:element name="FinancialInstitutionName" type="xs:string"/>
+                                        <xs:element name="TrazabilityCode" type="xs:string"/>
+                                        <xs:element name="CycleID" type="xs:int"/>
+                                        <xs:element name="ReferenceNumber1" type="xs:string"/>
+                                        <xs:element name="ReferenceNumber2" type="xs:string"/>
+                                        <xs:element name="ReferenceNumber3" type="xs:string"/>
+                                        <xs:element name="PaymentAmount" type="xs:decimal"/>
+                                        <xs:element name="ChargeAmount" type="xs:decimal"/>
+                                        <xs:element name="Fields" minOccurs="0"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ConfirmTransactionPaymentInvoiceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ConfirmTransactionPaymentInvoiceResult">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ReturnCode" type="xs:string"/>
+                            <xs:element name="Optional" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
