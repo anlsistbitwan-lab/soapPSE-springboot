@@ -49,7 +49,7 @@ public class ClientePSEEndpoint {
     public GetTransactionInformationInvoiceResponse getTransactionInformationInvoice(
             @RequestPayload GetTransactionInformationInvoice request) {
         
-        try {                
+        //try {                
             // SOAP -> DTO REST
             VerificationRequestDto verifyDto = ClientePSEMapper.toVerificationRequestDto(request);
 
@@ -58,52 +58,10 @@ public class ClientePSEEndpoint {
 
             // REST -> SOAP (mapeo)
             return ClientePSEMapper.toGetTransactionInformationInvoiceResponse(restResp, request);
-            } catch (HttpClientErrorException.BadRequest ex) {
-            String queryId = request.getQueryID();
-
-            // Simplemente devolvemos faultstring
-            throw new SoapFaultException(
-                    "no se encontró coincidencias en la consulta para el código " + queryId
-            );
-        }
+           
     }
     
-
-    // Namespace del cliente original (ACH Colombia)
-    /*@PayloadRoot(
-        namespace = "http://www.achcolombia.com.co/PSEHostingInvoicesWS",
-        localPart = "GetTransactionInformationInvoice"
-    )
-    @ResponsePayload
-    public GetTransactionInformationInvoiceResponse getTransactionInformationInvoiceAch(
-            @RequestPayload GetTransactionInformationInvoice request) {
-
-        return processGetTransactionInformationInvoice(request);
-    }
-
-    // Namespace del nuevo WSDL publicado (Bitwan)
-    @PayloadRoot(
-        namespace = "https://pruebados.bitwan.info/InsitelCollectionServicePse",
-        localPart = "GetTransactionInformationInvoice"
-    )
-    @ResponsePayload
-    public GetTransactionInformationInvoiceResponse getTransactionInformationInvoiceBitwan(
-            @RequestPayload GetTransactionInformationInvoice request) {
-
-        return processGetTransactionInformationInvoice(request);
-    }
-
-    // 👇 Método interno reutilizable
-    private GetTransactionInformationInvoiceResponse processGetTransactionInformationInvoice(
-            GetTransactionInformationInvoice request) {
-
-        VerificationRequestDto verifyDto = ClientePSEMapper.toVerificationRequestDto(request);
-        VerificationResponseDto restResp = verificationRestClient.verify(verifyDto);
-        return ClientePSEMapper.toGetTransactionInformationInvoiceResponse(restResp, request);
-    }
-    */
-
-
+    
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ConfirmTransactionPaymentInvoice")
     @ResponsePayload
     public ConfirmTransactionPaymentInvoiceResponse confirmTransactionPaymentInvoice(

@@ -48,14 +48,37 @@ public class ClientePSEMapper {
         GetTransactionInformationInvoiceResponse.GetTransactionInformationInvoiceResult result =
                 new GetTransactionInformationInvoiceResponse.GetTransactionInformationInvoiceResult();
 
-        // ReturnCode: OK si hubo respuesta, ERROR en otro caso
+        // Manejo de error proveniente del servicio REST
         if (restResponse == null) {
-            result.setReturnCode("ERROR");
-            result.setErrorMessage("No data from verification service");
+            result.setReturnCode("ERRORS");
+            result.setErrorMessage("No se obtuvo respuesta del servicio de verificación.");
             soapResponse.setGetTransactionInformationInvoiceResult(result);
             return soapResponse;
         }
 
+        // Si el servicio REST devolvió un error en lugar de facturas
+        if (restResponse.getError() != null && !restResponse.getError().isBlank()) {
+            String queryId = soapRequest.getQueryID() != null ? soapRequest.getQueryID().trim() : "";
+            String msg = "No se encontraron coincidencias en la consulta para el código " + queryId;
+
+            // puedes personalizar según el detalle del error
+            if (restResponse.getDetalles() != null && !restResponse.getDetalles().isBlank()) {
+                msg = restResponse.getDetalles();
+            }
+
+            //if (restResponse.getError().equals("0278")) {
+            if (List.of("0278", "0424").contains(restResponse.getError())) {
+                msg = "No se encontraron coincidencias en la consulta para el código " + queryId;
+            }
+
+            result.setReturnCode("ERRORS");
+            result.setErrorMessage(msg);
+            soapResponse.setGetTransactionInformationInvoiceResult(result);
+            return soapResponse;
+        }
+
+        // Si la respuesta REST es válida y contiene facturas
+        
         result.setReturnCode("OK");
         result.setErrorMessage(null);
 

@@ -56,6 +56,20 @@
 			<groupId>wsdl4j</groupId>
 			<artifactId>wsdl4j</artifactId>
 		</dependency>
+
+		<!-- Jakarta SOAP API (reemplazo moderno de javax.xml.soap) -->
+		<dependency>
+			<groupId>jakarta.xml.soap</groupId>
+			<artifactId>jakarta.xml.soap-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<!-- Implementación de referencia necesaria para procesar mensajes SOAP -->
+		<dependency>
+			<groupId>com.sun.xml.messaging.saaj</groupId>
+			<artifactId>saaj-impl</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 		
 	</dependencies>
 

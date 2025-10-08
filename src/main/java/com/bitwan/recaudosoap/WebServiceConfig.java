@@ -3,13 +3,18 @@ package com.bitwan.recaudosoap;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.config.annotation.EnableWs;
+import org.springframework.ws.config.annotation.WsConfigurer;
+import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+import org.springframework.ws.server.EndpointInterceptor;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
@@ -17,13 +22,17 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
+import com.bitwan.recaudosoap.config.WsAddressingAndSecurityInterceptor;
+//import com.bitwan.recaudosoap.config.CustomNamespacePrefixMapper;
+import jakarta.xml.bind.Marshaller;
+
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWs
-public class WebServiceConfig {
+public class WebServiceConfig implements WsConfigurer{
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext applicationContext) {
@@ -31,21 +40,6 @@ public class WebServiceConfig {
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
         return new ServletRegistrationBean<>(servlet, "/InsitelCollectionServicePse/*");
-    }
-
-    @Bean(name = "clientePSE")
-    public DefaultWsdl11Definition clientePSEWsdl(XsdSchema clientePseSchema) {
-        DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
-        definition.setPortTypeName("PSEHostingInvoicesWSSoap");
-        definition.setLocationUri("/ws/clientePSE");
-        definition.setTargetNamespace("https://pruebados.bitwan.info/InsitelCollectionServicePse");
-        definition.setSchema(clientePseSchema);
-        return definition;
-    }
-
-    @Bean
-    public XsdSchema clientePseSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("clientePSE/clientePSE.xsd"));
     }
 
     
@@ -86,6 +80,31 @@ public class WebServiceConfig {
         // Mapea el servlet directamente a /InsitelCollectionServicePse/wsdl
         return new ServletRegistrationBean<>(servlet, "/InsitelCollectionServicePse/wsdl");
     }
+
+    // Registrar Interceptor personalizado WS-Addressing y WS-Security
+    @Override
+    public void addInterceptors(List<EndpointInterceptor> interceptors) {
+        interceptors.add(wsAddressingAndSecurityInterceptor());
+    }
+
+    @Bean
+    public WsAddressingAndSecurityInterceptor wsAddressingAndSecurityInterceptor() {
+        return new WsAddressingAndSecurityInterceptor();
+    }
+
+    //Marshallers JAXB configurado con prefijo ns2 para el namespace del contrato actual PSE.
+    /*@Bean
+    public Jaxb2Marshaller marshaller() {
+        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        marshaller.setPackagesToScan("com.bitwan.soap.clientePSE");
+
+        // Configuración personalizada del prefijo ns2
+        CustomNamespacePrefixMapper.configure(marshaller);
+
+        return marshaller;
+    }*/
+
+    
 
     
 }

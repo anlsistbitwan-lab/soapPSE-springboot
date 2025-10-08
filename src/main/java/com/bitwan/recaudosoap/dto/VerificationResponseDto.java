@@ -7,6 +7,11 @@ public class VerificationResponseDto {
     private List<FacturaDto> facturas;
     private String total;
 
+    //Caso de error (API devolvió error)
+    private String error;
+    private String detalles;
+    private String causa;
+
     public static class FacturaDto {
         private String numeroFactura;
         private Long idAsientoContable;
@@ -25,6 +30,7 @@ public class VerificationResponseDto {
         public void setFechaEmision(String fechaEmision) { this.fechaEmision = fechaEmision; }
         public String getFechaVencimiento() { return fechaVencimiento; }
         public void setFechaVencimiento(String fechaVencimiento) { this.fechaVencimiento = fechaVencimiento; }
+        
     }
 
     // getters & setters
@@ -34,4 +40,27 @@ public class VerificationResponseDto {
     public void setFacturas(List<FacturaDto> facturas) { this.facturas = facturas; }
     public String getTotal() { return total; }
     public void setTotal(String total) { this.total = total; }
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
+    }
+
+    public String getCausa() {
+        return causa;
+    }
+
+    public void setCausa(String causa) {
+        this.causa = causa;
+    }
 }
