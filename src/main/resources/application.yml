@@ -14,22 +14,22 @@ api:
       url: "https://pruebados.bitwan.info/recaudo/verificacion"
       auth:
         type: basic
-        username: "pse.api-access"
-        password: "PSE_4P1_ACC3S5"
+        username: ${PSE_API_USER}
+        password: ${PSE_API_PASS}
 
     payment:
       url: "https://pruebados.bitwan.info/recaudo/notificacion-pago"
       auth:
         type: basic
-        username: "pse.api-access"
-        password: "PSE_4P1_ACC3S5"
+        username: ${PSE_API_USER}
+        password: ${PSE_API_PASS}
 
     confirmation-pse:
       url: "https://pruebados.bitwan.info/recaudo/pse-rest/notificacion-pago"
       auth:
         type: basic
-        username: "pse.api-access"
-        password: "PSE_4P1_ACC3S5"    
+        username: ${PSE_API_USER}
+        password: ${PSE_API_PASS}
 
     otra-api:
       url: "https://ejemplo.com/otra-api"
