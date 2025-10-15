@@ -96,7 +96,7 @@ public class ClientePSEMapper {
                 // InvoiceID <- idAsientoContable (convertir a String si es Long)
                 invoiceField.setInvoiceID(f.getIdAsientoContable() != null ? String.valueOf(f.getIdAsientoContable()) : "");
 
-                invoiceField.setPaymentDescription("Pago de Factura local");
+                invoiceField.setPaymentDescription("Pago de Factura");
 
                 // Amount, VatAmount como BigDecimal
                 BigDecimal amount = BigDecimal.ZERO;
@@ -237,7 +237,7 @@ public class ClientePSEMapper {
             result.setOptional("No response from PSE REST API");
         } else {
             result.setReturnCode("OK");
-            result.setOptional("Pago registrado exitosamente (PSE REST)");
+            result.setOptional("Pago registrado exitosamente");
         }
 
         soapResponse.setConfirmTransactionPaymentInvoiceResult(result);

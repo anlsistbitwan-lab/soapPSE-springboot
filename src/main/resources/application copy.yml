@@ -1,13 +1,3 @@
-server:
-  port: 8080
-
-spring:
-  application:
-    name: recaudosoap
-
-wsdl:
-  address: "http://localhost:8080/InsitelCollectionServicePse/wsdl"
-
 api:
   clients:
     verification:

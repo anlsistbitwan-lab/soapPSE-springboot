@@ -180,11 +180,12 @@
   <!-- Servicio y puertos -->
   <wsdl:service name="PSEHostingInvoicesWS">
     <wsdl:port name="PSEHostingInvoicesWSSoap" binding="tns:PSEHostingInvoicesWSSoap">
-     <soap:address location="http://localhost:8080/InsitelCollectionServicePse/wsdl"/>
+     <soap:address location="${SERVICE_URL}"/>
       <!--
       <soap:address location="http://localhost:8080/InsitelCollectionServicePse"/>
       <soap:address location="http://localhost:8080/InsitelCollectionServicePse/wsdl"/>
       <soap:address location="https://pruebados.bitwan.info/InsitelCollectionServicePse/wsdl"/>
+      <soap:address location="${soap.address.location}"/>
       -->
     </wsdl:port>
   </wsdl:service>

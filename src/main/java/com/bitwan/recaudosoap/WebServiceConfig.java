@@ -1,6 +1,7 @@
 package com.bitwan.recaudosoap;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.config.annotation.EnableWs;
@@ -43,30 +45,29 @@ public class WebServiceConfig implements WsConfigurer{
     }
 
     
-    // WSDL estático expuesto en /InsitelCollectionServicePse/wsdl
-    @Bean(name = "InsitelCollectionServicePse")
-    public SimpleWsdl11Definition insitelCollectionServicePseWsdl() {
-        return new SimpleWsdl11Definition(
-                new ClassPathResource("/wsdl/wsdlv2.wsdl")
-        );
-    }
-
     /**
      * Redirección manual para servir el archivo WSDL sin la extensión .wsdl
      * Permite acceder a:
      *   http://localhost:8080/InsitelCollectionServicePse/wsdl
      */
     @Bean
-    public ServletRegistrationBean<HttpServlet> wsdlRedirectServlet() {
+    public ServletRegistrationBean<HttpServlet> wsdlRedirectServlet(Environment env) {
         HttpServlet servlet = new HttpServlet() {
-             @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("text/xml; charset=UTF-8");
-            var resource = new ClassPathResource("wsdl/wsdlv2.wsdl");
-            try (var inputStream = resource.getInputStream()) {
-                inputStream.transferTo(resp.getOutputStream());
-            }
+            @Override
+            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("text/xml; charset=UTF-8");
+
+                // 1) Intenta leer de Spring (application.properties/yml) -> key: service.url
+                // 2) Si no existe, Default local
+                String serviceUrl =
+                        env.getProperty("wsdl.address",
+                        "http://localhost:8080/InsitelCollectionServicePse/wsdl");
+
+                var resource = new ClassPathResource("wsdl/wsdlv2.wsdl");
+                String wsdl = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                wsdl = wsdl.replace("${SERVICE_URL}", serviceUrl);
+                resp.getWriter().write(wsdl);
         }
 
         @Override
